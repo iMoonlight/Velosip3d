@@ -68,6 +68,7 @@
     <Compile Include="Engine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Render.cs" />
+    <Compile Include="RenderCamera.cs" />
     <Compile Include="RenderFactory.cs" />
     <Compile Include="RenderObject.cs" />
   </ItemGroup>
