@@ -2,11 +2,13 @@
 
 namespace Velosip3d
 {
-    static class Engine
+    class Engine
     {
         static void Main(string[] args)
         {
             Render.Init();
+
+            Console.ReadKey();
         }
     }
 }
