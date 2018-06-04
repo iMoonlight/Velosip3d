@@ -70,9 +70,11 @@ namespace Velosip3d
         {
             Console.WriteLine("SetUp.");
 
+            cam.Position = new Vector3(2.0f, 2.5f, 6.5f);
+
             renderObjectsList.Add(new RenderObjects.ObjectCube());
             renderObjectsList.Add(new RenderObjects.ObjectCube());
-            renderObjectsList.Add(new RenderObjects.ObjectParallelepiped());
+            renderObjectsList.Add(new RenderObjects.ObjectCube());
             renderObjectsList.Add(new RenderObjects.ObjectCube());
 
             glProgramId = GL.CreateProgram();
@@ -179,17 +181,18 @@ namespace Velosip3d
             GL.VertexAttribPointer(shaderInVCol, 3, VertexAttribPointerType.Float, true, 0, 0);
 
             time += (float)e.Time;
-
-            renderObjectsList[0].Position = new Vector3(1.0f, 0.0f, 0.0f);
+            
+            //TEST OBJECT "XYU"
+            renderObjectsList[0].Position = new Vector3(1.0f, (float)Math.Sin(time), 0.0f);
             renderObjectsList[0].Scale = new Vector3(1.0f, 1.0f, 1.0f);
 
-            renderObjectsList[1].Position = new Vector3(3.0f, 0.0f, 0.0f);
+            renderObjectsList[1].Position = new Vector3(3.0f, (float)Math.Sin(time), 0.0f);
             renderObjectsList[1].Scale = new Vector3(1.0f, 1.0f, 1.0f);
 
-            renderObjectsList[2].Position = new Vector3(2.0f, 0.0f, 0.0f);
-            renderObjectsList[2].Scale = new Vector3(1.0f, 1.0f, 1.0f);
+            renderObjectsList[2].Position = new Vector3(2.0f, (float)Math.Cos(time), 0.0f);
+            renderObjectsList[2].Scale = new Vector3(1.0f, 4.5f, 1.0f);
 
-            renderObjectsList[3].Position = new Vector3(2.0f, 2.7f, 0.0f);
+            renderObjectsList[3].Position = new Vector3(2.0f, 2.7f + (float)Math.Cos(time), 0.0f);
             renderObjectsList[3].Scale = new Vector3(1.2f, 1.2f, 1.2f);
 
             foreach (RenderObjects.ObjectBase v in renderObjectsList)
