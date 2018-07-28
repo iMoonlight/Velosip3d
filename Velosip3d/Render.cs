@@ -28,41 +28,41 @@ namespace Velosip3d
         private static Vector3[] dataColor;
         private static int[] dataVertexIndec;
 
-        internal static RenderCamera MainCamera { get; } = new RenderCamera();
+        public static RenderCamera MainCamera { get; } = new RenderCamera();
         public static GameWindow RenderWindow { get; } = new GameWindow(Configs.Render.windowSize[0], Configs.Render.windowSize[1]);
 
         public static void Init()
         {
             InitEvents();
 
-            Console.WriteLine("Init.");
+            Tools.LogN("MethodCalled", "Init.");
 
             RenderWindow.Run();
         }
 
         private static void InitEvents()
         {
-            Console.WriteLine("Events.");
+            Tools.LogN("MethodCalled", "Events.");
 
             RenderWindow.Load += (es, e) => OnLoad();
             RenderWindow.Resize += (es, e) => OnResize();
             RenderWindow.UpdateFrame += (es, e) => OnFrameUpdate(e);
             RenderWindow.RenderFrame += (es, e) => OnFrameRender();
-            RenderWindow.FocusedChanged += (es, e) => OnFocusedChanged(e);
-
-            RenderWindow.KeyDown += (es, e) => OnKeyboard(e);
+      
+            //RenderWindow.FocusedChanged += (es, e) => OnFocusedChanged(e);
+            RenderWindow.KeyDown += (es, e) => Controls.OnKeyboard(e);
         }
 
         private static void SetUp()
         {
-            Console.WriteLine("SetUp.");
+            Tools.LogN("MethodCalled", "SetUp.");
 
-            MainCamera.Position = new Vector3(2.0f, 2.5f, 6.5f);
+            MainCamera.MoveToPoint(new Vector3(2.0f, 2.5f, 6.5f));
 
             glProgramId = GL.CreateProgram();
 
-            shaderBaseVertex = ShaderLoadFromFile("baseVertex", ShaderType.VertexShader, glProgramId);
-            shaderBaseFragment = ShaderLoadFromFile("baseFragment", ShaderType.FragmentShader, glProgramId);
+            shaderBaseVertex = RenderTools.Shaders.ShaderLoadFromFile("baseVertex", ShaderType.VertexShader, glProgramId);
+            shaderBaseFragment = RenderTools.Shaders.ShaderLoadFromFile("baseFragment", ShaderType.FragmentShader, glProgramId);
 
             GL.LinkProgram(glProgramId);
 
@@ -78,12 +78,14 @@ namespace Velosip3d
 
         private static void UpdateViewport()
         {
+            Tools.LogN("MethodCalled", "UpdateViewport");
+
             GL.Viewport(0, 0, RenderWindow.ClientRectangle.Width, RenderWindow.ClientRectangle.Height);
         }
 
         private static void OnLoad()
         {
-            Console.WriteLine("OnLoad.");
+            Tools.LogN("MethodCalled", "OnLoad.");
 
             RenderWindow.VSync = VSyncMode.Off;
             if (Configs.Render.VSync) RenderWindow.VSync = VSyncMode.On;
@@ -97,17 +99,17 @@ namespace Velosip3d
 
         private static void OnResize()
         {
-            Console.WriteLine("OnResize.");
+            Tools.LogN("MethodCalled", "OnResize.");
 
             UpdateViewport();
         }
 
         private static void OnFrameUpdate(FrameEventArgs e)
         {
-            if (Configs.Render.showFPS)
+            if (Configs.Render.showDebugInfo)
             {
-                var _title = Configs.Render.windowTitle + ", FPS: " + Math.Round(RenderWindow.RenderFrequency).ToString();
-                _title += ", Objects: " + renderObjectsList.Count.ToString();
+                string _title = Configs.Render.windowTitle + ", FPS: " + Math.Round(RenderWindow.RenderFrequency).ToString();
+                _title += ", Objects: 0";// + renderObjectsList.Count.ToString();
                 _title += ", Frames: " + frames.ToString();
 
                 RenderWindow.Title = _title;
@@ -117,14 +119,14 @@ namespace Velosip3d
             List<int> inds = new List<int>();
             List<Vector3> colors = new List<Vector3>();
 
-            int vertcount = 0;
-            foreach (RenderObjects.Object v in renderObjectsList)
-            {
-                verts.AddRange(v.GetVerts().ToList());
-                inds.AddRange(v.GetIndices(vertcount).ToList());
-                colors.AddRange(v.GetColorData().ToList());
-                vertcount += v.countVertex;
-            }
+            //int vertcount = 0;
+            //foreach (RenderObjects.Object v in renderObjectsList)
+            //{
+            //    verts.AddRange(v.GetVerts().ToList());
+            //    inds.AddRange(v.GetIndices(vertcount).ToList());
+            //    colors.AddRange(v.GetColorData().ToList());
+            //    vertcount += v.countVertex;
+            //}
 
             dataVertex = verts.ToArray();
             dataVertexIndec = inds.ToArray();
@@ -138,12 +140,12 @@ namespace Velosip3d
             GL.BufferData<Vector3>(BufferTarget.ArrayBuffer, (IntPtr)(dataColor.Length * Vector3.SizeInBytes), dataColor, BufferUsageHint.StaticDraw);
             GL.VertexAttribPointer(shaderInVCol, 3, VertexAttribPointerType.Float, true, 0, 0);
             
-            foreach (RenderObjects.Object v in renderObjectsList)
-            {
-                v.CalculateModelMatrix();
-                v.matrixProjectionView = MainCamera.GetViewMatrix() * Matrix4.CreatePerspectiveFieldOfView(1.3f, (float)(RenderWindow.ClientSize.Width / RenderWindow.ClientSize.Height), 1.0f, 40.0f);
-                v.matrixProjectionModelview = v.matrixModel * v.matrixProjectionView;
-            }
+            //foreach (RenderObjects.Object v in renderObjectsList)
+            //{
+            //    v.CalculateModelMatrix();
+            //    v.matrixProjectionView = MainCamera.GetViewMatrix() * Matrix4.CreatePerspectiveFieldOfView(1.3f, (float)(RenderWindow.ClientSize.Width / RenderWindow.ClientSize.Height), 1.0f, 40.0f);
+            //    v.matrixProjectionModelview = v.matrixModel * v.matrixProjectionView;
+            //}
 
             GL.UseProgram(glProgramId);
 
@@ -151,34 +153,23 @@ namespace Velosip3d
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, iboElements);
             GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)(dataVertexIndec.Length * sizeof(int)), dataVertexIndec, BufferUsageHint.StaticDraw);
-
-            if (RenderWindow.Focused)
-            {
-                Vector2 delta = mousePosLast - new Vector2(OpenTK.Input.Mouse.GetState().X, OpenTK.Input.Mouse.GetState().Y);
-
-                MainCamera.AddRotation(delta.X, delta.Y);
-                controlCursorReset();
-            }
         }
 
         private static void OnFrameRender()
         {
-            UpdateViewport();
-
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.Enable(EnableCap.DepthTest);
 
             GL.EnableVertexAttribArray(shaderInVPos);
             GL.EnableVertexAttribArray(shaderInVCol);
 
-            int indiceat = 0;
-
-            foreach (RenderObjects.Object v in renderObjectsList)
-            {
-                GL.UniformMatrix4(shaderModelview, false, ref v.matrixProjectionModelview);
-                GL.DrawElements(BeginMode.Triangles, v.countIndec, DrawElementsType.UnsignedInt, indiceat * sizeof(uint));
-                indiceat += v.countIndec;
-            }
+            //int indiceat = 0;
+            //foreach (RenderObjects.Object v in renderObjectsList)
+            //{
+            //    GL.UniformMatrix4(shaderModelview, false, ref v.matrixProjectionModelview);
+            //    GL.DrawElements(BeginMode.Triangles, v.countIndec, DrawElementsType.UnsignedInt, indiceat * sizeof(uint));
+            //    indiceat += v.countIndec;
+            //}
 
             GL.DisableVertexAttribArray(shaderInVPos);
             GL.DisableVertexAttribArray(shaderInVPos);

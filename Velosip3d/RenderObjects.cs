@@ -9,7 +9,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace RenderObjects
 {
-    public abstract class Object
+    public abstract class Base
     {
         public Vector3 Position = Vector3.Zero;
         public Vector3 Rotation = Vector3.Zero;

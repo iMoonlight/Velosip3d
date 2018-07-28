@@ -16,9 +16,9 @@ namespace Velosip3d
 
         }
 
-        private static void OnKeyboard(KeyboardKeyEventArgs e)
+        public static void OnKeyboard(KeyboardKeyEventArgs e)
         {
-            Console.WriteLine("OnKeyboard: " + e.Key.ToString());
+            Tools.LogN("Keyboard", e.Key.ToString());
 
             if (e.Key == Key.Escape)
             {
@@ -28,30 +28,41 @@ namespace Velosip3d
             switch (e.Key)
             {
                 case Key.W:
-                    cam.Move(0f, 0.1f, 0f);
+                    Render.MainCamera.Move(0f, 0.1f, 0f);
                     break;
                 case Key.A:
-                    cam.Move(-0.1f, 0f, 0f);
+                    Render.MainCamera.Move(-0.1f, 0f, 0f);
                     break;
                 case Key.S:
-                    cam.Move(0f, -0.1f, 0f);
+                    Render.MainCamera.Move(0f, -0.1f, 0f);
                     break;
                 case Key.D:
-                    cam.Move(0.1f, 0f, 0f);
+                    Render.MainCamera.Move(0.1f, 0f, 0f);
                     break;
                 case Key.Q:
-                    cam.Move(0f, 0f, 0.1f);
+                    Render.MainCamera.Move(0f, 0f, 0.1f);
                     break;
                 case Key.E:
-                    cam.Move(0f, 0f, -0.1f);
+                    Render.MainCamera.Move(0f, 0f, -0.1f);
                     break;
             }
         }
 
         private static void controlCursorReset()
         {
-            Mouse.SetPosition(renderWindow.Bounds.Left + renderWindow.Bounds.Width / 2, renderWindow.Bounds.Top + renderWindow.Bounds.Height / 2);
+            Mouse.SetPosition(Render.RenderWindow.Bounds.Left + Render.RenderWindow.Bounds.Width / 2, Render.RenderWindow.Bounds.Top + Render.RenderWindow.Bounds.Height / 2);
             mousePosLast = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+        }
+
+        private static void TEMP()
+        {
+            //if (RenderWindow.Focused)
+            //{
+            //    Vector2 delta = mousePosLast - new Vector2(OpenTK.Input.Mouse.GetState().X, OpenTK.Input.Mouse.GetState().Y);
+
+            //    Render.MainCamera.AddRotation(delta.X, delta.Y);
+            //    controlCursorReset();
+            //}
         }
     }
 }

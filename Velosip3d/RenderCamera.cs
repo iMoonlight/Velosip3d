@@ -11,8 +11,8 @@ namespace Velosip3d
 {
     internal class RenderCamera
     {
-        public Vector3 Position = Vector3.Zero;
-        public Vector3 Orientation = new Vector3((float)Math.PI, 0f, 0f);
+        Vector3 Position = Vector3.Zero;
+        Vector3 Orientation = new Vector3((float)Math.PI, 0f, 0f);
         public float MoveSpeed = 0.2f;
         public float MouseSensitivity = 0.01f;
 
@@ -42,6 +42,11 @@ namespace Velosip3d
             offset = Vector3.Multiply(offset, MoveSpeed);
 
             Position += offset;
+        }
+
+        public void MoveToPoint(Vector3 point)
+        {
+            Position = point;
         }
 
         public void AddRotation(float x, float y)
