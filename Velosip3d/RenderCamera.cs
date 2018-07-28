@@ -9,7 +9,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Velosip3d
 {
-    class RenderCamera
+    internal class RenderCamera
     {
         public Vector3 Position = Vector3.Zero;
         public Vector3 Orientation = new Vector3((float)Math.PI, 0f, 0f);
