@@ -18,13 +18,13 @@ namespace Velosip3d
 
         public struct Render
         {
-            public static readonly int[] windowSize = { 800, 600 };
+            public static readonly int[] windowSize = { 1280, 720 };
             public static readonly string windowTitle = "Render output";
             public static readonly bool VSync = true;
 
             public static readonly float FOV = 90.0f;
 
-            public static readonly bool showDebugInfo = false;
+            public static readonly bool showDebugInfo = true;
         }
 
         public struct Controls

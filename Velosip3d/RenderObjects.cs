@@ -9,7 +9,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace RenderObjects
 {
-    public abstract class Base
+    public abstract class BaseObject
     {
         public Vector3 Position = Vector3.Zero;
         public Vector3 Rotation = Vector3.Zero;
@@ -26,5 +26,11 @@ namespace RenderObjects
         public abstract int[] GetIndices(int offset = 0);
         public abstract Vector3[] GetColorData();
         public abstract void CalculateModelMatrix();
+    }
+
+    public abstract class BaseLight
+    {
+        public Vector3 Position = Vector3.Zero;
+        public Vector3 Rotation = Vector3.Zero;
     }
 }

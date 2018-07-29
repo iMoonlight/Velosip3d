@@ -10,10 +10,13 @@ namespace Velosip3d
     internal static class Controls
     {
         private static Vector2 mousePosLast = new Vector2();
+        private static RenderCamera cam;
+        private static GameWindow window;
 
         public static void Init()
         {
-
+            cam = Render.MainCamera;
+            window = Render.RenderWindow;
         }
 
         public static void OnKeyboard(KeyboardKeyEventArgs e)
@@ -28,29 +31,29 @@ namespace Velosip3d
             switch (e.Key)
             {
                 case Key.W:
-                    Render.MainCamera.Move(0f, 0.1f, 0f);
+                    cam.Move(0f, 0.1f, 0f);
                     break;
                 case Key.A:
-                    Render.MainCamera.Move(-0.1f, 0f, 0f);
+                    cam.Move(-0.1f, 0f, 0f);
                     break;
                 case Key.S:
-                    Render.MainCamera.Move(0f, -0.1f, 0f);
+                    cam.Move(0f, -0.1f, 0f);
                     break;
                 case Key.D:
-                    Render.MainCamera.Move(0.1f, 0f, 0f);
+                    cam.Move(0.1f, 0f, 0f);
                     break;
                 case Key.Q:
-                    Render.MainCamera.Move(0f, 0f, 0.1f);
+                    cam.Move(0f, 0f, 0.1f);
                     break;
                 case Key.E:
-                    Render.MainCamera.Move(0f, 0f, -0.1f);
+                    cam.Move(0f, 0f, -0.1f);
                     break;
             }
         }
 
         private static void controlCursorReset()
         {
-            Mouse.SetPosition(Render.RenderWindow.Bounds.Left + Render.RenderWindow.Bounds.Width / 2, Render.RenderWindow.Bounds.Top + Render.RenderWindow.Bounds.Height / 2);
+            Mouse.SetPosition(window.Bounds.Left + window.Bounds.Width / 2, window.Bounds.Top + window.Bounds.Height / 2);
             mousePosLast = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
         }
 

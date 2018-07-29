@@ -8,6 +8,7 @@ using System.IO;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using System.Threading.Tasks;
 
 namespace Velosip3d
 {
@@ -29,15 +30,19 @@ namespace Velosip3d
         private static int[] dataVertexIndec;
 
         public static RenderCamera MainCamera { get; } = new RenderCamera();
-        public static GameWindow RenderWindow { get; } = new GameWindow(Configs.Render.windowSize[0], Configs.Render.windowSize[1]);
+        public static GameWindow RenderWindow { get; set; }
 
         public static void Init()
         {
-            InitEvents();
+            new Thread(() => //Threaded GameWindow
+            {
+                Thread.CurrentThread.IsBackground = true;
 
-            Tools.LogN("MethodCalled", "Init.");
-
-            RenderWindow.Run();
+                RenderWindow = new GameWindow(Configs.Render.windowSize[0], Configs.Render.windowSize[1]);
+                InitEvents();
+                Tools.LogN("MethodCalled", "Init.");
+                RenderWindow.Run();
+            }).Start();
         }
 
         private static void InitEvents()

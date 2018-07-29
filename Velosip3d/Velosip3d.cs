@@ -16,6 +16,7 @@ namespace Velosip3d
             //Alot of cheks mb
             Configs.Init();
             Render.Init();
+            Tools.LogN("MethodCalled", "Begin.");
             Controls.Init();
         }
     }
