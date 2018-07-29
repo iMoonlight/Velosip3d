@@ -17,11 +17,13 @@ namespace Velosip3d
         {
             cam = Render.MainCamera;
             window = Render.RenderWindow;
+
+            //window.KeyDown += (es, e) => OnKeyboard(e);
         }
 
-        public static void OnKeyboard(KeyboardKeyEventArgs e)
+        private static void OnKeyboard(KeyboardKeyEventArgs e)
         {
-            Tools.LogN("Keyboard", e.Key.ToString());
+            Tools.LogC("Keyboard", e.Key.ToString());
 
             if (e.Key == Key.Escape)
             {

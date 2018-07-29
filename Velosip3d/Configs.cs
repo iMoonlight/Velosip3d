@@ -34,7 +34,7 @@ namespace Velosip3d
 
         public static void Init()
         {
-            
+            Tools.LogM();
         }
     }
 }

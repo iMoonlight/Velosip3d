@@ -34,20 +34,21 @@ namespace Velosip3d
 
         public static void Init()
         {
+            Tools.LogM();
+
             new Thread(() => //Threaded GameWindow
             {
                 Thread.CurrentThread.IsBackground = true;
 
                 RenderWindow = new GameWindow(Configs.Render.windowSize[0], Configs.Render.windowSize[1]);
                 InitEvents();
-                Tools.LogN("MethodCalled", "Init.");
                 RenderWindow.Run();
             }).Start();
         }
 
         private static void InitEvents()
         {
-            Tools.LogN("MethodCalled", "Events.");
+            Tools.LogM();
 
             RenderWindow.Load += (es, e) => OnLoad();
             RenderWindow.Resize += (es, e) => OnResize();
@@ -55,12 +56,11 @@ namespace Velosip3d
             RenderWindow.RenderFrame += (es, e) => OnFrameRender();
       
             //RenderWindow.FocusedChanged += (es, e) => OnFocusedChanged(e);
-            RenderWindow.KeyDown += (es, e) => Controls.OnKeyboard(e);
         }
 
         private static void SetUp()
         {
-            Tools.LogN("MethodCalled", "SetUp.");
+            Tools.LogM();
 
             MainCamera.MoveToPoint(new Vector3(2.0f, 2.5f, 6.5f));
 
@@ -83,14 +83,14 @@ namespace Velosip3d
 
         private static void UpdateViewport()
         {
-            Tools.LogN("MethodCalled", "UpdateViewport");
+            Tools.LogM();
 
             GL.Viewport(0, 0, RenderWindow.ClientRectangle.Width, RenderWindow.ClientRectangle.Height);
         }
 
         private static void OnLoad()
         {
-            Tools.LogN("MethodCalled", "OnLoad.");
+            Tools.LogM();
 
             RenderWindow.VSync = VSyncMode.Off;
             if (Configs.Render.VSync) RenderWindow.VSync = VSyncMode.On;
@@ -104,7 +104,7 @@ namespace Velosip3d
 
         private static void OnResize()
         {
-            Tools.LogN("MethodCalled", "OnResize.");
+            Tools.LogM();
 
             UpdateViewport();
         }

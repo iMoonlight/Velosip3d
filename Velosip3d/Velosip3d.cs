@@ -6,18 +6,14 @@ namespace Velosip3d
     {
         private static void Main(string[] args)
         {
-            Begin();
+            Tools.LogM();
 
-            Console.ReadKey();
-        }
-
-        private static void Begin()
-        {
             //Alot of cheks mb
             Configs.Init();
             Render.Init();
-            Tools.LogN("MethodCalled", "Begin.");
             Controls.Init();
+
+            Console.ReadKey();
         }
     }
 }

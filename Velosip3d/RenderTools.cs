@@ -30,7 +30,7 @@ namespace Velosip3d
 
                 using (StreamReader sr = new StreamReader(_fullPath))
                 {
-                    Tools.LogN("ShaderLoaded", _fullName);
+                    Tools.LogC("Shader loaded", _fullName);
                     return ShaderLoadFromString(sr.ReadToEnd(), type, programId);
                 }
             }
