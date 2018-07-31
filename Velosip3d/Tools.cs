@@ -13,7 +13,7 @@ namespace Velosip3d
         {
             string timeCode = DateTime.Now.ToString("HH:mm:ss");
 
-            Console.WriteLine("[" + timeCode + "] " + action + ": " + text);
+            Console.WriteLine("[" + timeCode + "] " + action + " > " + text);
         }
 
         public static void LogM() //Full log of method call
@@ -25,7 +25,7 @@ namespace Velosip3d
             string lineNumber = frame.GetFileLineNumber().ToString();
             string timeCode = DateTime.Now.ToString("HH:mm:ss");
 
-            Console.WriteLine("[" + timeCode + "] " + fileName + ":" + lineNumber + " " + method);
+            LogC(fileName + ":" + lineNumber, method);
         }
     }
 }

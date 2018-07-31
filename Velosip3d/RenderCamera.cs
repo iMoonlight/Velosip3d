@@ -29,6 +29,8 @@ namespace Velosip3d
 
         public void Move(float x, float y, float z)
         {
+            Tools.LogM();
+
             Vector3 offset = new Vector3();
 
             Vector3 forward = new Vector3((float)Math.Sin((float)Orientation.X), 0, (float)Math.Cos((float)Orientation.X));
@@ -46,11 +48,15 @@ namespace Velosip3d
 
         public void MoveToPoint(Vector3 point)
         {
+            Tools.LogM();
+
             Position = point;
         }
 
         public void AddRotation(float x, float y)
         {
+            Tools.LogM();
+
             x = x * MouseSensitivity;
             y = y * MouseSensitivity;
 

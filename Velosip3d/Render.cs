@@ -41,8 +41,9 @@ namespace Velosip3d
                 Thread.CurrentThread.IsBackground = true;
 
                 RenderWindow = new GameWindow(Configs.Render.windowSize[0], Configs.Render.windowSize[1]);
+
                 InitEvents();
-                RenderWindow.Run();
+                RenderWindow.Run();             
             }).Start();
         }
 

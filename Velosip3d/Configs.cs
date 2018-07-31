@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using OpenTK.Input;
 
 namespace Velosip3d
 {
@@ -30,6 +31,12 @@ namespace Velosip3d
         public struct Controls
         {
             public static readonly float mouseSens = 0.01f;
+
+            public static Dictionary<string, Key> Keys = new Dictionary<string, Key>()
+            {
+                {"control", Key.LControl}
+            };
+
         }
 
         public static void Init()
