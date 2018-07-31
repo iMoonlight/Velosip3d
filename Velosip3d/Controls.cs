@@ -2,6 +2,7 @@
 using OpenTK.Input;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -11,12 +12,12 @@ namespace Velosip3d
     internal static class Controls
     {
         private static Vector2 mousePosLast = new Vector2();
-        private static RenderCamera cam;
+        private static MainCamera cam;
         private static GameWindow window;
 
         private static List<Key> keyBuffer = new List<Key>();
 
-        private static Dictionary<List<Key>, Action> keyShortcuts = new Dictionary<List<Key>, Action>();
+        private static Dictionary<Key, Action> keyActions = new Dictionary<Key, Action>();
 
         public static void Init()
         {
@@ -25,7 +26,7 @@ namespace Velosip3d
             cam = Render.MainCamera;
 
             while (Render.RenderWindow == null){ //Quick workaround
-                Thread.Sleep(10);
+                Tools.Lag(10);
             }
 
             window = Render.RenderWindow;
@@ -34,8 +35,18 @@ namespace Velosip3d
             window.KeyUp += (es, e) => OnKeyboard(false, e);
             window.MouseMove += (es, e) => OnMouseMove();
 
-            keyShortcuts.Add(new List<Key> { Key.W }, () => cam.Move(0f, 0.1f, 0f)); //LOL
-            //keyShortcuts.Add(new List<Key> { }, () => window.Exit()); //LOL
+            keyActions.Add(Key.Escape, () => window.Exit()); //Hardcoded ESC = END ALL SH*T
+            keyActions.Add(Configs.Controls.Keys["cam.forward"], () => cam.Move(0f, 0.1f, 0f));
+            keyActions.Add(Configs.Controls.Keys["cam.back"], () => cam.Move(0f, -0.1f, 0f));
+            keyActions.Add(Configs.Controls.Keys["cam.left"], () => cam.Move(-0.1f, 0f, 0f));
+            keyActions.Add(Configs.Controls.Keys["cam.right"], () => cam.Move(0.1f, 0f, 0f));
+
+            new Thread(() => //Threaded key process
+            {
+                Thread.CurrentThread.IsBackground = true;
+
+                KeyBufferProcessor();
+            }).Start();
         }
 
         private static void OnKeyboard(bool state, KeyboardKeyEventArgs e)
@@ -55,42 +66,6 @@ namespace Velosip3d
                 keyBuffer.RemoveAll(key => key == e.Key);
                 KeyReleased(e.Key);
             }
-
-            foreach (Key _key in keyBuffer)
-            {
-                Console.Write(_key.ToString() + " ");
-            }
-            Console.WriteLine();
-
-            //foreach (Key key in keyBuffer)
-            //{
-            //    if (key == Key.Escape)
-            //    {
-            //        window.Exit();
-            //    }
-
-            //    switch (key)
-            //    {
-            //        //case Key.W:
-            //        //    cam.Move(0f, 0.1f, 0f);
-            //        //    break;
-            //        case Key.A:
-            //            cam.Move(-0.1f, 0f, 0f);
-            //            break;
-            //        case Key.S:
-            //            cam.Move(0f, -0.1f, 0f);
-            //            break;
-            //        case Key.D:
-            //            cam.Move(0.1f, 0f, 0f);
-            //            break;
-            //        case Key.Q:
-            //            cam.Move(0f, 0f, 0.1f);
-            //            break;
-            //        case Key.E:
-            //            cam.Move(0f, 0f, -0.1f);
-            //            break;
-            //    }
-            //}
         }
 
         private static void KeyPresseed(Key key)
@@ -101,6 +76,22 @@ namespace Velosip3d
         private static void KeyReleased(Key key)
         {
             Tools.LogC("Keyreleased", key.ToString());
+        }
+
+        private static void KeyBufferProcessor() //RUN ONLY IN ANOTHER THREAD, ITS IMPORTANT FOR GAMES
+        {
+            while (true)
+            {
+                if (keyBuffer.Count > 0)
+                {
+                    foreach (Key key in keyBuffer.ToList())
+                    {
+                        if (keyActions.ContainsKey(key)) keyActions[key]();
+                    }
+                }
+
+                Tools.Lag(1);
+            }
         }
 
         private static void OnMouseMove()

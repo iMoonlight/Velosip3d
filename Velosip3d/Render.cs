@@ -29,7 +29,7 @@ namespace Velosip3d
         private static Vector3[] dataColor;
         private static int[] dataVertexIndec;
 
-        public static RenderCamera MainCamera { get; } = new RenderCamera();
+        public static MainCamera MainCamera { get; } = new MainCamera();
         public static GameWindow RenderWindow { get; set; }
 
         public static void Init()

@@ -9,12 +9,12 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Velosip3d
 {
-    internal class RenderCamera
+    internal class MainCamera
     {
         Vector3 Position = Vector3.Zero;
         Vector3 Orientation = new Vector3((float)Math.PI, 0f, 0f);
         public float MoveSpeed = 0.2f;
-        public float MouseSensitivity = 0.01f;
+        public float MouseSensitivity = Configs.Controls.mouseSens;
 
         public Matrix4 GetViewMatrix()
         {

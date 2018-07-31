@@ -1,9 +1,11 @@
-﻿using System;
+﻿using OpenTK.Input;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 
 namespace Velosip3d
 {
@@ -26,6 +28,11 @@ namespace Velosip3d
             string timeCode = DateTime.Now.ToString("HH:mm:ss");
 
             LogC(fileName + ":" + lineNumber, method);
+        }
+
+        public static void Lag(int ms)
+        {
+            Thread.Sleep(ms);
         }
     }
 }
