@@ -41,19 +41,14 @@ namespace Velosip3d
             keyActions.Add(Configs.Controls.Keys["cam.left"], () => cam.Move(-0.1f, 0f, 0f));
             keyActions.Add(Configs.Controls.Keys["cam.right"], () => cam.Move(0.1f, 0f, 0f));
 
-            new Thread(() => //Threaded key process
-            {
-                Thread.CurrentThread.IsBackground = true;
-
-                KeyBufferProcessor();
-            }).Start();
+            KeyBufferProcessor();
         }
 
         private static void OnKeyboard(bool state, KeyboardKeyEventArgs e)
         {
             if (!window.Focused) return; //I am making game engine, not keylogger ;)
 
-            if (state) //Spagethi?
+            if (state)
             {
                 if (!keyBuffer.Contains(e.Key))
                 {
@@ -80,18 +75,23 @@ namespace Velosip3d
 
         private static void KeyBufferProcessor() //RUN ONLY IN ANOTHER THREAD, ITS IMPORTANT FOR GAMES
         {
-            while (true)
+            new Thread(() => //Threaded key process
             {
-                if (keyBuffer.Count > 0)
-                {
-                    foreach (Key key in keyBuffer.ToList())
-                    {
-                        if (keyActions.ContainsKey(key)) keyActions[key]();
-                    }
-                }
+                Thread.CurrentThread.IsBackground = true;
 
-                Tools.Lag(1);
-            }
+                while (true)
+                {
+                    if (keyBuffer.Count > 0)
+                    {
+                        foreach (Key key in keyBuffer.ToList())
+                        {
+                            if (keyActions.ContainsKey(key)) keyActions[key]();
+                        }
+                    }
+
+                    Tools.Lag(1);
+                }
+            }).Start();
         }
 
         private static void OnMouseMove()
