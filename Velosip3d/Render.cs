@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
 using System.Threading;
-using System.IO;
 using OpenTK;
-using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
-using System.Threading.Tasks;
 
 namespace Velosip3d
 {
@@ -55,8 +50,6 @@ namespace Velosip3d
             RenderWindow.Resize += (es, e) => OnResize();
             RenderWindow.UpdateFrame += (es, e) => OnFrameUpdate(e);
             RenderWindow.RenderFrame += (es, e) => OnFrameRender();
-      
-            //RenderWindow.FocusedChanged += (es, e) => OnFocusedChanged(e);
         }
 
         private static void SetUp()

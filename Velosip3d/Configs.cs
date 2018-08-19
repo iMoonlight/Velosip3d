@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using OpenTK.Input;
 
 namespace Velosip3d
@@ -34,11 +32,11 @@ namespace Velosip3d
 
             public static Dictionary<string, Key> Keys = new Dictionary<string, Key>()
             {
-                {"control", Key.LControl},
-                {"cam.forward", Key.W },
-                {"cam.back", Key.S },
-                {"cam.left", Key.A },
-                {"cam.right", Key.D }
+                { "control", Key.LControl },
+                { "cam.forward", Key.W },
+                { "cam.back", Key.S },
+                { "cam.left", Key.A },
+                { "cam.right", Key.D }
             };
 
         }
