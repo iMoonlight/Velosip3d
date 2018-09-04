@@ -48,7 +48,7 @@ namespace Velosip3d
 
             RenderWindow.Load += (es, e) => OnLoad();
             RenderWindow.Resize += (es, e) => OnResize();
-            RenderWindow.UpdateFrame += (es, e) => OnFrameUpdate(e);
+            RenderWindow.UpdateFrame += (es, e) => OnFrameUpdate();
             RenderWindow.RenderFrame += (es, e) => OnFrameRender();
         }
 
@@ -103,7 +103,7 @@ namespace Velosip3d
             UpdateViewport();
         }
 
-        private static void OnFrameUpdate(FrameEventArgs e)
+        private static void OnFrameUpdate()
         {
             if (Configs.Render.showDebugInfo)
             {

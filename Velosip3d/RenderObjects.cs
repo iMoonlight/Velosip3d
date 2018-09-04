@@ -1,29 +1,20 @@
 ﻿using OpenTK;
+using System;
 
 namespace RenderObjects
 {
-    public abstract class BaseObject
+    interface IRenderObject
     {
-        public Vector3 Position = Vector3.Zero;
-        public Vector3 Rotation = Vector3.Zero;
-        public Vector3 Scale = Vector3.One;
-
-        public int countVertex;
-        public int countIndec;
-        public int countColorData;
-        public Matrix4 matrixModel = Matrix4.Identity;
-        public Matrix4 matrixProjectionView = Matrix4.Identity;
-        public Matrix4 matrixProjectionModelview = Matrix4.Identity;
-
-        public abstract Vector3[] GetVerts();
-        public abstract int[] GetIndices(int offset = 0);
-        public abstract Vector3[] GetColorData();
-        public abstract void CalculateModelMatrix();
+        Vector3 GetPos();
     }
 
-    public abstract class BaseLight
+    internal abstract class RObject: IRenderObject
     {
-        public Vector3 Position = Vector3.Zero;
-        public Vector3 Rotation = Vector3.Zero;
+        Vector3 _pos;
+
+        public Vector3 GetPos()
+        {
+            return _pos;
+        }
     }
 }

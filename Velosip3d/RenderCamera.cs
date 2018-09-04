@@ -14,9 +14,9 @@ namespace Velosip3d
         {
             Vector3 lookat = new Vector3();
 
-            lookat.X = (float)(Math.Sin((float)Orientation.X) * Math.Cos((float)Orientation.Y));
-            lookat.Y = (float)Math.Sin((float)Orientation.Y);
-            lookat.Z = (float)(Math.Cos((float)Orientation.X) * Math.Cos((float)Orientation.Y));
+            lookat.X = (float)(Math.Sin(Orientation.X) * Math.Cos(Orientation.Y));
+            lookat.Y = (float)Math.Sin(Orientation.Y);
+            lookat.Z = (float)(Math.Cos(Orientation.X) * Math.Cos(Orientation.Y));
 
             return Matrix4.LookAt(Position, Position + lookat, Vector3.UnitY);
         }
@@ -27,7 +27,7 @@ namespace Velosip3d
 
             Vector3 offset = new Vector3();
 
-            Vector3 forward = new Vector3((float)Math.Sin((float)Orientation.X), 0, (float)Math.Cos((float)Orientation.X));
+            Vector3 forward = new Vector3((float)Math.Sin(Orientation.X), 0, (float)Math.Cos(Orientation.X));
             Vector3 right = new Vector3(-forward.Z, 0, forward.X);
 
             offset += x * right;

@@ -13,6 +13,8 @@ namespace Velosip3d
         private static MainCamera cam;
         private static GameWindow window;
 
+        private static int tickTime = 1000 / Configs.Engine.tickRate;
+
         private static List<Key> keyBuffer = new List<Key>();
 
         private static Dictionary<Key, Action> keyActions = new Dictionary<Key, Action>();
@@ -24,7 +26,7 @@ namespace Velosip3d
             cam = Render.MainCamera;
 
             while (Render.RenderWindow == null){ //Quick workaround
-                Tools.Lag(10);
+                Tools.Lag(tickTime);
             }
 
             window = Render.RenderWindow;
@@ -87,7 +89,7 @@ namespace Velosip3d
                         }
                     }
 
-                    Tools.Lag(1);
+                    Tools.Lag(tickTime / 2);
                 }
             }).Start();
         }

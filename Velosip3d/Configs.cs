@@ -38,7 +38,11 @@ namespace Velosip3d
                 { "cam.left", Key.A },
                 { "cam.right", Key.D }
             };
+        }
 
+        public struct Engine
+        {
+            public static readonly int tickRate = 500; // Do not increase over 500
         }
 
         public static void Init()

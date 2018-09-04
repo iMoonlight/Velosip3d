@@ -70,6 +70,8 @@
     <Compile Include="Controls.cs" />
     <Compile Include="Configs.cs" />
     <Compile Include="RenderTools.cs" />
+    <Compile Include="Resourcer.cs" />
+    <Compile Include="Threader.cs" />
     <Compile Include="Tools.cs" />
     <Compile Include="Velosip3d.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
